@@ -62,9 +62,9 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
     // Lottery Variables
     uint256 private immutable i_interval;
     uint256 private immutable i_entranceFee;
-    uint256 private s_lastTimeStamp;
+    uint256 private s_lastTimeStamp;  
     address private s_recentWinner;
-    address payable[] private s_players;
+    address payable[] private s_players; // payable keyword so that we can pay them ETH.
     RaffleState private s_raffleState;
 
     /* Events */
@@ -107,7 +107,7 @@ contract Raffle is VRFConsumerBaseV2, AutomationCompatibleInterface {
 
         // after done checking, add players to the array!
         s_players.push(payable(msg.sender));
-        // Emit an event when we update a dynamic array or mapping
+        // Emit an event when we do a storage update! --> make migration easier && good for frontend "indexing"
         // Named events with the function name reversed - good practice
         emit RaffleEnter(msg.sender);
     }
